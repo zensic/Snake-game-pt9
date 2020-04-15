@@ -1,0 +1,7 @@
+D:\Users\Anthony\Desktop\PassTask4\Pass-Task-4.1-Snakegame\Snake\bin\Debug\Snake.exe.config
+D:\Users\Anthony\Desktop\PassTask4\Pass-Task-4.1-Snakegame\Snake\bin\Debug\Snake.exe
+D:\Users\Anthony\Desktop\PassTask4\Pass-Task-4.1-Snakegame\Snake\bin\Debug\Snake.pdb
+D:\Users\Anthony\Desktop\PassTask4\Pass-Task-4.1-Snakegame\Snake\obj\Debug\Snake.csprojAssemblyReference.cache
+D:\Users\Anthony\Desktop\PassTask4\Pass-Task-4.1-Snakegame\Snake\obj\Debug\Snake.csproj.CoreCompileInputs.cache
+D:\Users\Anthony\Desktop\PassTask4\Pass-Task-4.1-Snakegame\Snake\obj\Debug\Snake.exe
+D:\Users\Anthony\Desktop\PassTask4\Pass-Task-4.1-Snakegame\Snake\obj\Debug\Snake.pdb

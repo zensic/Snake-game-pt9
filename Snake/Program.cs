@@ -7,6 +7,7 @@ using System.Threading;
 
 namespace Snake
 {
+    //Stores the position of the food
     struct Position
     {
         public int row;
@@ -22,27 +23,31 @@ namespace Snake
     {
         static void Main(string[] args)
         {
+            //
             byte right = 0;
             byte left = 1;
             byte down = 2;
             byte up = 3;
             int lastFoodTime = 0;
-            int foodDissapearTime = 8000;
-            int negativePoints = 0;
+            int foodDissapearTime = 8000; // time for food to dissapear in milliseconds
+            int negativePoints = 0; //
 
-            Position[] directions = new Position[]
+            // Snake Default value
+            Position[] directions = new Position[] 
             {
                 new Position(0, 1), // right
                 new Position(0, -1), // left
                 new Position(1, 0), // down
                 new Position(-1, 0), // up
             };
-            double sleepTime = 100;
-            int direction = right;
-            Random randomNumbersGenerator = new Random();
-            Console.BufferHeight = Console.WindowHeight;
-            lastFoodTime = Environment.TickCount;
 
+            double sleepTime = 100; // Velocity of snake
+            int direction = right; // Initialize default snake direction
+            Random randomNumbersGenerator = new Random(); // Random number generator
+            Console.BufferHeight = Console.WindowHeight; //
+            lastFoodTime = Environment.TickCount; // Get time since program has started
+
+            // Initialize obstacle locations
             List<Position> obstacles = new List<Position>()
             {
                 new Position(12, 12),
@@ -51,6 +56,8 @@ namespace Snake
                 new Position(19, 19),
                 new Position(6, 9),
             };
+
+            // Initialize obstacle color
             foreach (Position obstacle in obstacles)
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
@@ -58,23 +65,26 @@ namespace Snake
                 Console.Write("=");
             }
 
+            // Initialize length of snake
             Queue<Position> snakeElements = new Queue<Position>();
             for (int i = 0; i <= 5; i++)
             {
                 snakeElements.Enqueue(new Position(0, i));
             }
 
+            // Initialize food
             Position food;
             do
             {
                 food = new Position(randomNumbersGenerator.Next(0, Console.WindowHeight),
-                    randomNumbersGenerator.Next(0, Console.WindowWidth));
+                    randomNumbersGenerator.Next(0, Console.WindowWidth)); // Initialize coordinate of food (random)
             }
             while (snakeElements.Contains(food) || obstacles.Contains(food));
             Console.SetCursorPosition(food.col, food.row);
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("@");
 
+            // Initialize snake body
             foreach (Position position in snakeElements)
             {
                 Console.SetCursorPosition(position.col, position.row);
@@ -82,13 +92,16 @@ namespace Snake
                 Console.Write("*");
             }
 
+            // Main game loop
             while (true)
             {
-                negativePoints++;
+                negativePoints++; // 
 
                 if (Console.KeyAvailable)
                 {
                     ConsoleKeyInfo userInput = Console.ReadKey();
+
+                    // Prevents snake from going backwards
                     if (userInput.Key == ConsoleKey.LeftArrow)
                     {
                         if (direction != right) direction = left;
@@ -107,8 +120,8 @@ namespace Snake
                     }
                 }
 
-                Position snakeHead = snakeElements.Last();
-                Position nextDirection = directions[direction];
+                Position snakeHead = snakeElements.Last(); // Returns last element in the queue, assigns the element as coordinate of snakeHead
+                Position nextDirection = directions[direction]; // 
 
                 Position snakeNewHead = new Position(snakeHead.row + nextDirection.row,
                     snakeHead.col + nextDirection.col);
@@ -149,9 +162,10 @@ namespace Snake
                     do
                     {
                         food = new Position(randomNumbersGenerator.Next(0, Console.WindowHeight),
-                            randomNumbersGenerator.Next(0, Console.WindowWidth));
+                            randomNumbersGenerator.Next(0, Console.WindowWidth)); // 
                     }
-                    while (snakeElements.Contains(food) || obstacles.Contains(food));
+                    while (snakeElements.Contains(food) || obstacles.Contains(food)); // To detect whether the snake/obstacle collides with food
+
                     lastFoodTime = Environment.TickCount;
                     Console.SetCursorPosition(food.col, food.row);
                     Console.ForegroundColor = ConsoleColor.Yellow;
