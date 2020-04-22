@@ -61,7 +61,7 @@ namespace Snake
             byte down = 2;
             byte up = 3;
             int gLastFoodTime = 0;
-            int gFoodDissapearTime = 8000; // Time for food to dissapear in milliseconds
+            int gFoodDissapearTime = 12000; // Time for food to dissapear in milliseconds
             int gNegativePoints = 0; // Points to be deducted from the final score
 
             // Snake Default value
@@ -162,11 +162,16 @@ namespace Snake
                 if (gSnakeElements.Contains(gSnakeNewHead) || gObstacles.Contains(gSnakeNewHead))
                 {
                     Draw("Red", 0, 0, "");
+                    Console.SetCursorPosition(Console.WindowWidth / 2 , 10); //Reposition the string
                     Console.WriteLine("Game over!");
                     int userPoints = (gSnakeElements.Count - 6) * 100 - gNegativePoints;
                     if (userPoints < 0) userPoints = 0;
                     userPoints = Math.Max(userPoints, 0);
+                    Console.SetCursorPosition(Console.WindowWidth / 2 - 4, 11); //Reposition the string
                     Console.WriteLine("Your points are: {0}", userPoints);
+
+                    Console.SetCursorPosition(Console.WindowWidth / 2 - 8, 13); //Reposition the string
+                    Console.WriteLine("Press Enter to exit the game");
                     Console.ReadLine();
                     return;
                 }
