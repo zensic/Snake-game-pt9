@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace Snake
 {
-    //Stores the position of the food
+    // Stores the position of the food
     struct Position
     {
         public int row;
@@ -21,24 +21,56 @@ namespace Snake
 
     class Program
     {
-        static void Main(string[] args)
+        // Drawer function
+        // Draws symbols based on specified color onto given coordinate
+        public static void Draw(string aColor, int aCol, int aRow, string aSymbol)
         {
-            // Assigning default value as index
+            switch (aColor)
+            {
+                case "Blue":
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    break;
+                case "Cyan":
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    break;
+                case "Red":
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    break;
+                case "Magenta":
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    break;
+                case "Yellow":
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    break;
+                case "DarkGray":
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    break;
+                default:
+                    Console.ForegroundColor = ConsoleColor.White;
+                    break;
+            }
+            Console.SetCursorPosition(aCol, aRow); // Moves cursor to the coordinate about to drawn
+            Console.Write(aSymbol); // Draws symbol on the coordinate
+        }
+
+        public static void Main(string[] args)
+        {
+            // Assigning values to right, left, down, up as index
             byte right = 0;
             byte left = 1;
             byte down = 2;
             byte up = 3;
             int gLastFoodTime = 0;
-            int gFoodDissapearTime = 8000; // time for food to dissapear in milliseconds
-            int gNegativePoints = 0; //
+            int gFoodDissapearTime = 8000; // Time for food to dissapear in milliseconds
+            int gNegativePoints = 0; // Points to be deducted from the final score
 
             // Snake Default value
             Position[] gDirections = new Position[]
             {
-                new Position(0, 1), // right
-                new Position(0, -1), // left
-                new Position(1, 0), // down
-                new Position(-1, 0), // up
+                new Position(0, 1), // Move right
+                new Position(0, -1), // Move left
+                new Position(1, 0), // Move down
+                new Position(-1, 0), // Move up
             };
 
             double gSleepTime = 100; // Velocity of snake
@@ -60,9 +92,7 @@ namespace Snake
             // Initialize obstacle color
             foreach (Position obstacle in gObstacles)
             {
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.SetCursorPosition(obstacle.col, obstacle.row);
-                Console.Write("=");
+                Draw("Cyan", obstacle.col, obstacle.row, "=");
             }
 
             // Initialize length of snake
@@ -80,16 +110,12 @@ namespace Snake
                     gRandomNumbersGenerator.Next(0, Console.WindowWidth)); // Initialize coordinate of food (random)
             }
             while (gSnakeElements.Contains(gFood) || gObstacles.Contains(gFood)); // To detect whether the food collides with the obstacles/snake body 
-            Console.SetCursorPosition(gFood.col, gFood.row);
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write("@");
+            Draw("Yellow", gFood.col, gFood.row, "@");
 
             // Initialize snake body
             foreach (Position position in gSnakeElements)
             {
-                Console.SetCursorPosition(position.col, position.row);
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.Write("*");
+                Draw("DarkGray", position.col, position.row, "*");
             }
 
             // Main game loop
@@ -124,7 +150,7 @@ namespace Snake
                 Position gNextDirection = gDirections[gDirection]; // The direction will be converted to integer as index, nextDirection will store the difference of the next coordinate
 
                 Position gSnakeNewHead = new Position(gSnakeHead.row + gNextDirection.row,
-                    gSnakeHead.col + gNextDirection.col); //
+                    gSnakeHead.col + gNextDirection.col); // Adds to the next position of the snake head
 
                 // Makes sure that the snake doesn't go out of bounds
                 if (gSnakeNewHead.col < 0) gSnakeNewHead.col = Console.WindowWidth - 1;
@@ -135,8 +161,7 @@ namespace Snake
                 // If the snake head collides with the snake body or the snake head hits an obstacle, the game loop ends
                 if (gSnakeElements.Contains(gSnakeNewHead) || gObstacles.Contains(gSnakeNewHead))
                 {
-                    Console.SetCursorPosition(0, 0);
-                    Console.ForegroundColor = ConsoleColor.Red;
+                    Draw("Red", 0, 0, "");
                     Console.WriteLine("Game over!");
                     int userPoints = (gSnakeElements.Count - 6) * 100 - gNegativePoints;
                     if (userPoints < 0) userPoints = 0;
@@ -146,17 +171,15 @@ namespace Snake
                     return;
                 }
 
-                Console.SetCursorPosition(gSnakeHead.col, gSnakeHead.row);
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.Write("*");
+                Draw("DarkGray", gSnakeHead.col, gSnakeHead.row, "*");
 
                 gSnakeElements.Enqueue(gSnakeNewHead);
                 Console.SetCursorPosition(gSnakeNewHead.col, gSnakeNewHead.row);
                 Console.ForegroundColor = ConsoleColor.Gray;
                 if (gDirection == right) Console.Write(">");
-                if (gDirection == left) Console.Write("<");
-                if (gDirection == up) Console.Write("^");
-                if (gDirection == down) Console.Write("v");
+                else if (gDirection == left) Console.Write("<");
+                else if (gDirection == up) Console.Write("^");
+                else Console.Write("v");
 
 
                 if (gSnakeNewHead.col == gFood.col && gSnakeNewHead.row == gFood.row)
@@ -169,10 +192,8 @@ namespace Snake
                     }
                     while (gSnakeElements.Contains(gFood) || gObstacles.Contains(gFood)); // To detect whether the snake/obstacle collides with food
 
-                    gLastFoodTime = Environment.TickCount; // 
-                    Console.SetCursorPosition(gFood.col, gFood.row);
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write("@");
+                    gLastFoodTime = Environment.TickCount; //
+                    Draw("Yellow", gFood.col, gFood.row, "@");
                     gSleepTime--; // Increase the velocity that the snake is travelling
 
                     Position obstacle = new Position(); // Initialize position of obstacle
@@ -186,9 +207,7 @@ namespace Snake
                         gObstacles.Contains(obstacle) ||
                         (gFood.row != obstacle.row && gFood.col != obstacle.row)); // Makes sure the obstacles do not spawn inside the food or other obstacles
                     gObstacles.Add(obstacle); // Adds a new obstacle to the queue
-                    Console.SetCursorPosition(obstacle.col, obstacle.row); // Moves cursor to the obstacle about to drawn
-                    Console.ForegroundColor = ConsoleColor.Cyan; // Join
-                    Console.Write("="); // 
+                    Draw("Cyan", obstacle.col, obstacle.row, "="); // Draws obstacle
                 }
                 else
                 {
@@ -212,9 +231,8 @@ namespace Snake
                     gLastFoodTime = Environment.TickCount; // 
                 }
 
-                Console.SetCursorPosition(gFood.col, gFood.row); // Moves cursor to the food about to be deleted
-                Console.ForegroundColor = ConsoleColor.Yellow; // Set the food color to yellow
-                Console.Write("@"); // Draw the @ on the food position
+                // Draws food
+                Draw("Yellow", gFood.col, gFood.row, "@");
 
                 gSleepTime -= 0.01; // Increase the velocity of the snake each time the loop is run
 
