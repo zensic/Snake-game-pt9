@@ -45,6 +45,9 @@ namespace Snake
                 case "DarkGray":
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     break;
+                case "Green":
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    break;
                 default:
                     Console.ForegroundColor = ConsoleColor.White;
                     break;
@@ -64,7 +67,7 @@ namespace Snake
             int gFoodDissapearTime = 12000; // Time for food to dissapear in milliseconds
             int gNegativePoints = 0; // Points to be deducted from the final score
 
-            // Snake Default value
+            // Initialize Snake Movement value
             Position[] gDirections = new Position[]
             {
                 new Position(0, 1), // Move right
@@ -99,7 +102,7 @@ namespace Snake
             Queue<Position> gSnakeElements = new Queue<Position>();
             for (int i = 0; i <= 5; i++)
             {
-                gSnakeElements.Enqueue(new Position(0, i));
+                gSnakeElements.Enqueue(new Position(1, i)); // Changed so that starts on second line
             }
 
             // Initialize food
@@ -121,7 +124,15 @@ namespace Snake
             // Main game loop
             while (true)
             {
-                gNegativePoints++; // This variable will be used to deduct from the total score
+                // Initialize negative points (deducted from total score)
+                gNegativePoints++;
+
+                // Initialize scoreboard
+                int userPoints = (gSnakeElements.Count - 6) * 100 - gNegativePoints;
+                if (userPoints < 0) userPoints = 0;
+                userPoints = Math.Max(userPoints, 0);
+
+                Draw("Green", 0, 0, "Score: " + userPoints);
 
                 if (Console.KeyAvailable)
                 {
@@ -154,22 +165,18 @@ namespace Snake
 
                 // Makes sure that the snake doesn't go out of bounds
                 if (gSnakeNewHead.col < 0) gSnakeNewHead.col = Console.WindowWidth - 1;
-                if (gSnakeNewHead.row < 0) gSnakeNewHead.row = Console.WindowHeight - 1;
-                if (gSnakeNewHead.row >= Console.WindowHeight) gSnakeNewHead.row = 0;
+                if (gSnakeNewHead.row < 1) gSnakeNewHead.row = Console.WindowHeight - 1;
+                if (gSnakeNewHead.row >= Console.WindowHeight) gSnakeNewHead.row = 1;
                 if (gSnakeNewHead.col >= Console.WindowWidth) gSnakeNewHead.col = 0;
 
                 // If the snake head collides with the snake body or the snake head hits an obstacle, the game loop ends
                 if (gSnakeElements.Contains(gSnakeNewHead) || gObstacles.Contains(gSnakeNewHead))
                 {
                     Draw("Red", 0, 0, "");
-                    Console.SetCursorPosition(Console.WindowWidth / 2 , 10); //Reposition the string
+                    Console.SetCursorPosition(Console.WindowWidth / 2, 10); //Reposition the string
                     Console.WriteLine("Game over!");
-                    int userPoints = (gSnakeElements.Count - 6) * 100 - gNegativePoints;
-                    if (userPoints < 0) userPoints = 0;
-                    userPoints = Math.Max(userPoints, 0);
                     Console.SetCursorPosition(Console.WindowWidth / 2 - 4, 11); //Reposition the string
                     Console.WriteLine("Your points are: {0}", userPoints);
-
                     Console.SetCursorPosition(Console.WindowWidth / 2 - 8, 13); //Reposition the string
                     Console.WriteLine("Press Enter to exit the game");
                     Console.ReadLine();
@@ -192,7 +199,7 @@ namespace Snake
                     // feeding the snake
                     do
                     {
-                        gFood = new Position(gRandomNumbersGenerator.Next(0, Console.WindowHeight),
+                        gFood = new Position(gRandomNumbersGenerator.Next(1, Console.WindowHeight),
                             gRandomNumbersGenerator.Next(0, Console.WindowWidth)); // Assign two random values into food position
                     }
                     while (gSnakeElements.Contains(gFood) || gObstacles.Contains(gFood)); // To detect whether the snake/obstacle collides with food
@@ -205,7 +212,7 @@ namespace Snake
 
                     do
                     {
-                        obstacle = new Position(gRandomNumbersGenerator.Next(0, Console.WindowHeight),
+                        obstacle = new Position(gRandomNumbersGenerator.Next(1, Console.WindowHeight),
                             gRandomNumbersGenerator.Next(0, Console.WindowWidth)); // Assign to random values into obstacle position
                     }
                     while (gSnakeElements.Contains(obstacle) ||
