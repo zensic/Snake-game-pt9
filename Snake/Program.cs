@@ -124,7 +124,7 @@ namespace Snake
 
             // Initialize soundplayer
             SoundPlayer player = new SoundPlayer();
-            player.SoundLocation = AppDomain.CurrentDomain.BaseDirectory + "\\bgm.wav";
+            player.SoundLocation = @"..\Sounds\bgm.wav";
             player.Play();
 
             // Main game loop
