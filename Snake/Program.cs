@@ -169,6 +169,20 @@ namespace Snake
                 if (gSnakeNewHead.row >= Console.WindowHeight) gSnakeNewHead.row = 1;
                 if (gSnakeNewHead.col >= Console.WindowWidth) gSnakeNewHead.col = 0;
 
+                // If the snake is size 15, the player wins and the game ends
+                if (gSnakeElements.Count == 15)
+                {
+                    Draw("Green", 0, 0, "");
+                    Console.SetCursorPosition(Console.WindowWidth / 2, 10); //Reposition the string
+                    Console.WriteLine("You won!");
+                    Console.SetCursorPosition(Console.WindowWidth / 2 - 4, 11); //Reposition the string
+                    Console.WriteLine("Your points are: {0}", userPoints);
+                    Console.SetCursorPosition(Console.WindowWidth / 2 - 8, 13); //Reposition the string
+                    Console.WriteLine("Press Enter to exit the game");
+                    Console.ReadLine();
+                    return;
+                }
+
                 // If the snake head collides with the snake body or the snake head hits an obstacle, the game loop ends
                 if (gSnakeElements.Contains(gSnakeNewHead) || gObstacles.Contains(gSnakeNewHead))
                 {
@@ -192,7 +206,6 @@ namespace Snake
                 else if (gDirection == left) Console.Write("<");
                 else if (gDirection == up) Console.Write("^");
                 else Console.Write("v");
-
 
                 if (gSnakeNewHead.col == gFood.col && gSnakeNewHead.row == gFood.row)
                 {
@@ -248,7 +261,7 @@ namespace Snake
 
                 gSleepTime -= 0.01; // Increase the velocity of the snake each time the loop is run
 
-                Thread.Sleep((int)gSleepTime); // 
+                Thread.Sleep((int)gSleepTime);
             }
         }
     }
