@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 using System.Threading;
+using System.Media;
 
 namespace Snake
 {
@@ -85,11 +86,11 @@ namespace Snake
             // Initialize obstacle locations
             List<Position> gObstacles = new List<Position>()
             {
-                new Position(12, 12),
-                new Position(14, 20),
-                new Position(7, 7),
-                new Position(19, 19),
-                new Position(6, 9),
+                new Position(gRandomNumbersGenerator.Next(1, Console.WindowHeight),gRandomNumbersGenerator.Next(0, Console.WindowWidth)),
+                new Position(gRandomNumbersGenerator.Next(1, Console.WindowHeight),gRandomNumbersGenerator.Next(0, Console.WindowWidth)),
+                new Position(gRandomNumbersGenerator.Next(1, Console.WindowHeight),gRandomNumbersGenerator.Next(0, Console.WindowWidth)),
+                new Position(gRandomNumbersGenerator.Next(1, Console.WindowHeight),gRandomNumbersGenerator.Next(0, Console.WindowWidth)),
+                new Position(gRandomNumbersGenerator.Next(1, Console.WindowHeight),gRandomNumbersGenerator.Next(0, Console.WindowWidth)),
             };
 
             // Initialize obstacle color
@@ -100,7 +101,7 @@ namespace Snake
 
             // Initialize length of snake
             Queue<Position> gSnakeElements = new Queue<Position>();
-            for (int i = 0; i <= 5; i++)
+            for (int i = 0; i <= 3; i++)
             {
                 gSnakeElements.Enqueue(new Position(1, i)); // Changed so that starts on second line
             }
@@ -120,6 +121,11 @@ namespace Snake
             {
                 Draw("DarkGray", position.col, position.row, "*");
             }
+
+            // Initialize soundplayer
+            SoundPlayer player = new SoundPlayer();
+            player.SoundLocation = AppDomain.CurrentDomain.BaseDirectory + "\\bgm.wav";
+            player.Play();
 
             // Main game loop
             while (true)
