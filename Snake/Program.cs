@@ -178,6 +178,8 @@ namespace Snake
                     Console.SetCursorPosition(Console.WindowWidth / 2 - 4, 11); //Reposition the string
                     Console.WriteLine("Your points are: {0}", userPoints);
                     Console.SetCursorPosition(Console.WindowWidth / 2 - 8, 13); //Reposition the string
+                    string lScore = "Score: " + userPoints.ToString();
+                    System.IO.File.WriteAllText(@"..\Scores\score.txt", lScore);
                     Console.WriteLine("Press Enter to exit the game");
                     Console.ReadLine();
                     return;
@@ -192,6 +194,8 @@ namespace Snake
                     Console.SetCursorPosition(Console.WindowWidth / 2 - 4, 11); //Reposition the string
                     Console.WriteLine("Your points are: {0}", userPoints);
                     Console.SetCursorPosition(Console.WindowWidth / 2 - 8, 13); //Reposition the string
+                    string lScore = "Score: " + userPoints.ToString();
+                    System.IO.File.WriteAllText(@"..\Scores\score.txt", lScore);
                     Console.WriteLine("Press Enter to exit the game");
                     Console.ReadLine();
                     return;
