@@ -2,3 +2,11 @@
 Player : Simon
 Score: 0
 --------------------
+
+Player : Simon
+Score: 0
+--------------------
+
+Player : Simon
+Score: 125
+--------------------

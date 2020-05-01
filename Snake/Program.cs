@@ -147,7 +147,7 @@ namespace Snake
             Console.SetCursorPosition(Console.WindowWidth / 2 - 8, 14); //Reposition the string
             string lPlyr_name = Console.ReadLine();
             Console.Clear(); //To clear out current screen
-            Draw("Blue", 10, 0, "Player Name:  " + lPlyr_name);
+            Draw("Blue", 12, 0, "Player Name:  " + lPlyr_name);
 
             // Initialize Snake Movement value
             Position[] gDirections = new Position[]
