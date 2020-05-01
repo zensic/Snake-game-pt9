@@ -68,23 +68,47 @@ namespace Snake
             int gLastFoodTime = 0;
             int gFoodDissapearTime = 12000; // Time for food to dissapear in milliseconds
             int gNegativePoints = 0; // Points to be deducted from the final score
+            string gDifficulty = "normal";
+            double gSleepTime = 100; // Velocity of snake
 
             while (true)
             {
                 Console.BufferHeight = Console.WindowHeight; // Intialize the height of the game window
-                Console.WriteLine("Main Menu");
-                Console.WriteLine("[1] Start Game\n[2] Scoreboard\n[3] Exit");
-                Console.WriteLine("Enter Your Selection(1/2/3): ");
-                string selection = Console.ReadLine();
-                if (selection == "1")
+                Console.BufferWidth = Console.WindowWidth; // Initialize the width of the game window
+                Console.Clear();
+                Draw("White", Console.BufferWidth / 2 - 3, Console.BufferHeight / 2 - 6, "Main Menu");
+                Draw("White", Console.BufferWidth / 2 - 8, Console.BufferHeight / 2 - 5, "------------------------");
+                Draw("White", Console.BufferWidth / 2 - 8, Console.BufferHeight / 2 - 4, "[1] Start Game");
+                Draw("White", Console.BufferWidth / 2 - 8, Console.BufferHeight / 2 - 3, "[2] Difficulty");
+                Draw("White", Console.BufferWidth / 2 - 8, Console.BufferHeight / 2 - 2, "[3] Highscores");
+                Draw("White", Console.BufferWidth / 2 - 8, Console.BufferHeight / 2 - 1, "[4] Instructions");
+                Draw("White", Console.BufferWidth / 2 - 8, Console.BufferHeight / 2, "[5] Exit\n");
+                Draw("White", Console.BufferWidth / 2 - 8, Console.BufferHeight / 2 + 2, "Enter Your Selection: ");
+                string gSelection = Console.ReadLine();
+
+                if (gSelection == "1")
                 {
                     break;
                 }
 
-                else if (selection == "2")
+                else if (gSelection == "2")
+                {
+                    Console.Clear();
+                    Draw("White", Console.BufferWidth / 2 - 5, Console.BufferHeight / 2 - 6, "Current Difficulty: " + gDifficulty);
+                    Draw("White", Console.BufferWidth / 2 - 5, Console.BufferHeight / 2 - 4, "Select difficulty level");
+                    Draw("White", Console.BufferWidth / 2 - 2, Console.BufferHeight / 2 - 3, "[1] Easy");
+                    Draw("White", Console.BufferWidth / 2 - 2, Console.BufferHeight / 2 - 2, "[2] Normal");
+                    Draw("White", Console.BufferWidth / 2 - 2, Console.BufferHeight / 2 - 1, "[3] Hard\n");
+                    Draw("White", Console.BufferWidth / 2 - 5, Console.BufferHeight / 2 + 1, "Enter Your Selection: ");
+
+                    // Sets value of difficulty
+                    gDifficulty = Console.ReadLine();
+                }
+
+                else if (gSelection == "3")
                 {
                     Console.Clear(); //To clear out current screen
-                    //Scoreboard
+                    // Display Scoreboard
                     string[] content = File.ReadAllLines(@"..\Scores\score.txt");
                     Console.WriteLine("Scoreboard");
                     foreach (string x in content)
@@ -92,9 +116,15 @@ namespace Snake
                         Console.WriteLine(x);
                     }
 
-                    Console.WriteLine("\nReturn to Main Menu? (1/2/3): ");
-                    string ask = Console.ReadLine();
-                    selection = ask;
+                    Console.WriteLine("\nPress enter to continue...");
+                    Console.ReadLine();
+                }
+
+                else if (gSelection == "4")
+                {
+                    // Implement instructions here..
+                    Console.WriteLine("\nPress enter to continue...");
+                    Console.ReadLine();
                 }
 
                 else
@@ -123,7 +153,23 @@ namespace Snake
                 new Position(-1, 0), // Move up
             };
 
-            double gSleepTime = 100; // Velocity of snake
+            // Changes speed of snake according to difficulty
+            switch (gDifficulty)
+            {
+                case "1":
+                    gSleepTime = 150;
+                    break;
+                case "2":
+                    gSleepTime = 100;
+                    break;
+                case "3":
+                    gSleepTime = 50;
+                    break;
+                default:
+                    gSleepTime = 100;
+                    break;
+            }
+
             int gDirection = right; // Initialize default snake direction
             Random gRandomNumbersGenerator = new Random(); // Random number generator
             gLastFoodTime = Environment.TickCount; // Get time since program has started
