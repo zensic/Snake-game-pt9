@@ -12,3 +12,10 @@ D:\Users\Anthony\Desktop\clone\SnakeGame-pt6\Snake\obj\Debug\Snake.csprojAssembl
 D:\Users\Anthony\Desktop\clone\SnakeGame-pt6\Snake\obj\Debug\Snake.csproj.CoreCompileInputs.cache
 D:\Users\Anthony\Desktop\clone\SnakeGame-pt6\Snake\obj\Debug\Snake.exe
 D:\Users\Anthony\Desktop\clone\SnakeGame-pt6\Snake\obj\Debug\Snake.pdb
+C:\Users\Simon\Desktop\DP1\SnakeGame-pt6\Snake\bin\Debug\Snake.exe.config
+C:\Users\Simon\Desktop\DP1\SnakeGame-pt6\Snake\bin\Debug\Snake.exe
+C:\Users\Simon\Desktop\DP1\SnakeGame-pt6\Snake\bin\Debug\Snake.pdb
+C:\Users\Simon\Desktop\DP1\SnakeGame-pt6\Snake\obj\Debug\Snake.csprojAssemblyReference.cache
+C:\Users\Simon\Desktop\DP1\SnakeGame-pt6\Snake\obj\Debug\Snake.csproj.CoreCompileInputs.cache
+C:\Users\Simon\Desktop\DP1\SnakeGame-pt6\Snake\obj\Debug\Snake.exe
+C:\Users\Simon\Desktop\DP1\SnakeGame-pt6\Snake\obj\Debug\Snake.pdb

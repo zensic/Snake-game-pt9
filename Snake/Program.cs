@@ -123,6 +123,11 @@ namespace Snake
                 else if (gSelection == "4")
                 {
                     // Implement instructions here..
+                    Console.Clear();
+                    Console.WriteLine("Instructions:" +
+                        "\n1. Move the snake using arrow keys." +
+                        "\n2. Avoid colliding with the obstacle '='" +
+                        "\n3. Eat the food '@' using the snake head '>' to gain the snake length '*' ");
                     Console.WriteLine("\nPress enter to continue...");
                     Console.ReadLine();
                 }
@@ -197,6 +202,11 @@ namespace Snake
                 gSnakeElements.Enqueue(new Position(1, i)); // Changed so that starts on second line
             }
 
+            // Initilize random food
+            Random randomfood = new Random();
+            List<string> foodtype = new List<string> { "@", "#", "$", "%" };
+            int index = randomfood.Next(foodtype.Count);
+
             // Initialize food
             Position gFood;
             do
@@ -205,7 +215,7 @@ namespace Snake
                     gRandomNumbersGenerator.Next(0, Console.WindowWidth)); // Initialize coordinate of food (random)
             }
             while (gSnakeElements.Contains(gFood) || gObstacles.Contains(gFood)); // To detect whether the food collides with the obstacles/snake body 
-            Draw("Yellow", gFood.col, gFood.row, "@");
+            Draw("Yellow", gFood.col, gFood.row, foodtype[index]);
 
             // Initialize snake body
             foreach (Position position in gSnakeElements)
@@ -218,6 +228,7 @@ namespace Snake
             player.SoundLocation = @"..\Sounds\bgm.wav";
             player.Play();
 
+            
             // Main game loop
             while (true)
             {
@@ -320,13 +331,15 @@ namespace Snake
                     // feeding the snake
                     do
                     {
+                        // Randomize food 
+                        index = randomfood.Next(foodtype.Count);
                         gFood = new Position(gRandomNumbersGenerator.Next(1, Console.WindowHeight),
                             gRandomNumbersGenerator.Next(0, Console.WindowWidth)); // Assign two random values into food position
                     }
                     while (gSnakeElements.Contains(gFood) || gObstacles.Contains(gFood)); // To detect whether the snake/obstacle collides with food
 
                     gLastFoodTime = Environment.TickCount; //
-                    Draw("Yellow", gFood.col, gFood.row, "@");
+                    Draw("Yellow", gFood.col, gFood.row, foodtype[index]);
                     gSleepTime--; // Increase the velocity that the snake is travelling
 
                     Position obstacle = new Position(); // Initialize position of obstacle
@@ -357,6 +370,8 @@ namespace Snake
                     Console.Write(" "); // Deletes the food drawn at that position
                     do
                     {
+                        // Randomize food 
+                        index = randomfood.Next(foodtype.Count);
                         gFood = new Position(gRandomNumbersGenerator.Next(0, Console.WindowHeight),
                             gRandomNumbersGenerator.Next(0, Console.WindowWidth)); // Assigns new position to the food
                     }
@@ -365,7 +380,7 @@ namespace Snake
                 }
 
                 // Draws food
-                Draw("Yellow", gFood.col, gFood.row, "@");
+                Draw("Yellow", gFood.col, gFood.row, foodtype[index]);
 
                 gSleepTime -= 0.01; // Increase the velocity of the snake each time the loop is run
 
