@@ -201,7 +201,7 @@ namespace Snake
             Position gFood;
             do
             {
-                gFood = new Position(gRandomNumbersGenerator.Next(0, Console.WindowHeight),
+                gFood = new Position(gRandomNumbersGenerator.Next(1, Console.WindowHeight),
                     gRandomNumbersGenerator.Next(0, Console.WindowWidth)); // Initialize coordinate of food (random)
             }
             while (gSnakeElements.Contains(gFood) || gObstacles.Contains(gFood)); // To detect whether the food collides with the obstacles/snake body 
