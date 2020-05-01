@@ -5,6 +5,7 @@ using System.Text;
 using System.Collections;
 using System.Threading;
 using System.Media;
+using System.IO;
 
 namespace Snake
 {
@@ -68,6 +69,51 @@ namespace Snake
             int gFoodDissapearTime = 12000; // Time for food to dissapear in milliseconds
             int gNegativePoints = 0; // Points to be deducted from the final score
 
+            while (true)
+            {
+                Console.BufferHeight = Console.WindowHeight; // Intialize the height of the game window
+                Console.WriteLine("Main Menu");
+                Console.WriteLine("[1] Start Game\n[2] Scoreboard\n[3] Exit");
+                Console.WriteLine("Enter Your Selection(1/2/3): ");
+                string selection = Console.ReadLine();
+                if (selection == "1")
+                {
+                    break;
+                }
+
+                else if (selection == "2")
+                {
+                    Console.Clear(); //To clear out current screen
+                    //Scoreboard
+                    string[] content = File.ReadAllLines(@"..\Scores\score.txt");
+                    Console.WriteLine("Scoreboard");
+                    foreach (string x in content)
+                    {
+                        Console.WriteLine(x);
+                    }
+
+                    Console.WriteLine("\nReturn to Main Menu? (1/2/3): ");
+                    string ask = Console.ReadLine();
+                    selection = ask;
+                }
+
+                else
+                {
+                    System.Environment.Exit(0);
+                }
+            }
+            Console.Clear(); //To clear out current screen
+
+            //Input for player name
+            Console.SetCursorPosition(Console.WindowWidth / 2 - 8, 13); //Reposition the string
+            Console.WriteLine("Type in your username: ");
+            Console.SetCursorPosition(Console.WindowWidth / 2 - 8, 14); //Reposition the string
+            Console.WriteLine("_______________________");
+            Console.SetCursorPosition(Console.WindowWidth / 2 - 8, 14); //Reposition the string
+            string lPlyr_name = Console.ReadLine();
+            Console.Clear(); //To clear out current screen
+            Draw("Blue", 10, 0, "Player Name:  " + lPlyr_name);
+
             // Initialize Snake Movement value
             Position[] gDirections = new Position[]
             {
@@ -80,7 +126,6 @@ namespace Snake
             double gSleepTime = 100; // Velocity of snake
             int gDirection = right; // Initialize default snake direction
             Random gRandomNumbersGenerator = new Random(); // Random number generator
-            Console.BufferHeight = Console.WindowHeight; // Intialize the height of the game window
             gLastFoodTime = Environment.TickCount; // Get time since program has started
 
             // Initialize obstacle locations
@@ -134,7 +179,7 @@ namespace Snake
                 gNegativePoints++;
 
                 // Initialize scoreboard
-                int userPoints = (gSnakeElements.Count - 6) * 100 - gNegativePoints;
+                int userPoints = (gSnakeElements.Count - 4) * 100 - gNegativePoints;
                 if (userPoints < 0) userPoints = 0;
                 userPoints = Math.Max(userPoints, 0);
 
@@ -201,7 +246,14 @@ namespace Snake
                     Console.WriteLine("Your points are: {0}", userPoints);
                     Console.SetCursorPosition(Console.WindowWidth / 2 - 8, 13); //Reposition the string
                     string lScore = "Score: " + userPoints.ToString();
-                    System.IO.File.WriteAllText(@"..\Scores\score.txt", lScore);
+
+                    //Updating score text file
+                    using (StreamWriter lFile = File.AppendText(@"..\Scores\score.txt"))
+                    {
+                        lFile.WriteLine("\nPlayer : " + lPlyr_name);
+                        lFile.WriteLine(lScore);
+                        lFile.WriteLine("--------------------");
+                    }
                     Console.WriteLine("Press Enter to exit the game");
                     Console.ReadLine();
                     return;
