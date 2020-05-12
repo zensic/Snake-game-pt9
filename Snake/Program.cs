@@ -68,7 +68,7 @@ namespace Snake
             int gLastFoodTime = 0;
             int gFoodDissapearTime = 12000; // Time for food to dissapear in milliseconds
             int gNegativePoints = 0; // Points to be deducted from the final score
-            string gDifficulty = "normal";
+            string gDifficulty = "2";
             double gSleepTime = 100; // Velocity of snake
 
             while (true)
