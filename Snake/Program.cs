@@ -68,8 +68,9 @@ namespace Snake
             int gLastFoodTime = 0;
             int gFoodDissapearTime = 12000; // Time for food to dissapear in milliseconds
             int gNegativePoints = 0; // Points to be deducted from the final score
-            string gDifficulty = "2";
+            string gDifficulty = "normal";
             double gSleepTime = 100; // Velocity of snake
+            int gbonuspoints = 0;
 
             while (true)
             {
@@ -228,7 +229,7 @@ namespace Snake
             player.SoundLocation = @"..\Sounds\bgm.wav";
             player.Play();
 
-            
+
             // Main game loop
             while (true)
             {
@@ -236,7 +237,7 @@ namespace Snake
                 gNegativePoints++;
 
                 // Initialize scoreboard
-                int userPoints = (gSnakeElements.Count - 4) * 100 - gNegativePoints;
+                int userPoints = (gSnakeElements.Count - 4) * 100 + gbonuspoints - gNegativePoints;
                 if (userPoints < 0) userPoints = 0;
                 userPoints = Math.Max(userPoints, 0);
 
@@ -326,9 +327,30 @@ namespace Snake
                 else if (gDirection == up) Console.Write("^");
                 else Console.Write("v");
 
+                // feeding the snake
                 if (gSnakeNewHead.col == gFood.col && gSnakeNewHead.row == gFood.row)
                 {
-                    // feeding the snake
+                    if (foodtype[index] == "@")
+                    {
+                        gbonuspoints += 100;
+                    }
+                    else if (foodtype[index] == "#")
+                    {
+                        gbonuspoints += 150;
+                    }
+                    else if (foodtype[index] == "$")
+                    {
+                        gbonuspoints += 200;
+                    }
+                    else if (foodtype[index] == "%")
+                    {
+                        gbonuspoints += 250;
+                    }
+                    else
+                    {
+                        gbonuspoints += 0;
+                    }
+
                     do
                     {
                         // Randomize food 
