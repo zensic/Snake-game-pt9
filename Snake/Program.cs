@@ -14,10 +14,18 @@ namespace Snake
     {
         public int row;
         public int col;
+
+        // Added coordinates for second food spawn
+        public int row1;
+        public int col1;
         public Position(int aRow, int aCol)
         {
             row = aRow;
             col = aCol;
+
+            // Second food will always spawn behind first food
+            row1 = aRow + 1;
+            col1 = aCol;
         }
     }
 
@@ -68,7 +76,7 @@ namespace Snake
             int gLastFoodTime = 0;
             int gFoodDissapearTime = 12000; // Time for food to dissapear in milliseconds
             int gNegativePoints = 0; // Points to be deducted from the final score
-            string gDifficulty = "normal";
+            string gDifficulty = "normal"; // Displays normal difficulty by default
             double gSleepTime = 100; // Velocity of snake
             int gbonuspoints = 0;
 
@@ -181,14 +189,20 @@ namespace Snake
             gLastFoodTime = Environment.TickCount; // Get time since program has started
 
             // Initialize obstacle locations
-            List<Position> gObstacles = new List<Position>()
+            List<Position> gObstacles = new List<Position>();
+
+            // Initialize obstacles randomly so that they will not spawn inside each other
+            for (int i = 0; i<= 4; i++)
             {
-                new Position(gRandomNumbersGenerator.Next(1, Console.WindowHeight),gRandomNumbersGenerator.Next(0, Console.WindowWidth)),
-                new Position(gRandomNumbersGenerator.Next(1, Console.WindowHeight),gRandomNumbersGenerator.Next(0, Console.WindowWidth)),
-                new Position(gRandomNumbersGenerator.Next(1, Console.WindowHeight),gRandomNumbersGenerator.Next(0, Console.WindowWidth)),
-                new Position(gRandomNumbersGenerator.Next(1, Console.WindowHeight),gRandomNumbersGenerator.Next(0, Console.WindowWidth)),
-                new Position(gRandomNumbersGenerator.Next(1, Console.WindowHeight),gRandomNumbersGenerator.Next(0, Console.WindowWidth)),
-            };
+                Position lObstacle = new Position();
+                do
+                {
+                    lObstacle = new Position(gRandomNumbersGenerator.Next(1, Console.WindowHeight),
+                        gRandomNumbersGenerator.Next(0, Console.WindowWidth)); // Assign to random values into obstacle position
+                }
+                while ( gObstacles.Contains(lObstacle)); // Makes sure the obstacles do not spawn inside other obstacles
+                gObstacles.Add(lObstacle); // Adds a new obstacle to the queue
+            }
 
             // Initialize obstacle color
             foreach (Position obstacle in gObstacles)
