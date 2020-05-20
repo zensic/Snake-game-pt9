@@ -10,3 +10,11 @@ Score: 0
 Player : Simon
 Score: 125
 --------------------
+
+Player : Whale3
+Score: 1256
+--------------------
+
+Player : 12345
+Score: 1467
+--------------------

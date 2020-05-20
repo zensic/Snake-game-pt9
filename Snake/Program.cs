@@ -14,18 +14,10 @@ namespace Snake
     {
         public int row;
         public int col;
-
-        // Added coordinates for second food spawn
-        public int row1;
-        public int col1;
         public Position(int aRow, int aCol)
         {
             row = aRow;
             col = aCol;
-
-            // Second food will always spawn behind first food
-            row1 = aRow + 1;
-            col1 = aCol;
         }
     }
 
@@ -222,15 +214,23 @@ namespace Snake
             List<string> foodtype = new List<string> { "@", "#", "$", "%" };
             int index = randomfood.Next(foodtype.Count);
 
-            // Initialize food
+            // Initialize food two times
+
             Position gFood;
+            Position gFood2;
             do
             {
                 gFood = new Position(gRandomNumbersGenerator.Next(1, Console.WindowHeight),
                     gRandomNumbersGenerator.Next(0, Console.WindowWidth)); // Initialize coordinate of food (random)
+
+                // Initialize food directly behind the first food
+                gFood2 = new Position(gFood.row, gFood.col + 1);
             }
-            while (gSnakeElements.Contains(gFood) || gObstacles.Contains(gFood)); // To detect whether the food collides with the obstacles/snake body 
+            // To detect whether the food collides with the obstacles / snake body + second body
+            while (gSnakeElements.Contains(gFood) || gObstacles.Contains(gFood) || gSnakeElements.Contains(gFood2) || gObstacles.Contains(gFood2)); 
+            
             Draw("Yellow", gFood.col, gFood.row, foodtype[index]);
+            Draw("Yellow", gFood2.col, gFood2.row, foodtype[index]);
 
             // Initialize snake body
             foreach (Position position in gSnakeElements)
@@ -320,7 +320,7 @@ namespace Snake
                     Console.SetCursorPosition(Console.WindowWidth / 2 - 8, 13); //Reposition the string
                     string lScore = "Score: " + userPoints.ToString();
 
-                    //Updating score text file
+                    // Updating score text file
                     using (StreamWriter lFile = File.AppendText(@"..\Scores\score.txt"))
                     {
                         lFile.WriteLine("\nPlayer : " + lPlyr_name);
@@ -342,8 +342,28 @@ namespace Snake
                 else if (gDirection == up) Console.Write("^");
                 else Console.Write("v");
 
-                // feeding the snake
+                // Feeding the snake
+                bool gCondition1 = false;
+                bool gCondition2 = false;
+
+                // If snake head collides with food1
                 if (gSnakeNewHead.col == gFood.col && gSnakeNewHead.row == gFood.row)
+                {
+                    gCondition1 = true;
+                    Console.SetCursorPosition(gFood2.col, gFood2.row);
+                    Console.Write(" ");
+                }
+
+                // If snake head collides with food1
+                if (gSnakeNewHead.col == gFood2.col && gSnakeNewHead.row == gFood2.row)
+                {
+                    gCondition2 = true;
+                    Console.SetCursorPosition(gFood.col, gFood.row); // Moves cursor to the food about to be deleted
+                    Console.Write(" "); // Deletes the food drawn at that position
+                }
+
+                // If snake head collides with food
+                if (gCondition1 || gCondition2)
                 {
                     if (foodtype[index] == "@")
                     {
@@ -368,15 +388,22 @@ namespace Snake
 
                     do
                     {
-                        // Randomize food 
+                        // Initialize next food after eaten
                         index = randomfood.Next(foodtype.Count);
-                        gFood = new Position(gRandomNumbersGenerator.Next(1, Console.WindowHeight),
-                            gRandomNumbersGenerator.Next(0, Console.WindowWidth)); // Assign two random values into food position
-                    }
-                    while (gSnakeElements.Contains(gFood) || gObstacles.Contains(gFood)); // To detect whether the snake/obstacle collides with food
 
-                    gLastFoodTime = Environment.TickCount; //
+                        // Assign two random values into food position
+                        gFood = new Position(gRandomNumbersGenerator.Next(1, Console.WindowHeight),
+                            gRandomNumbersGenerator.Next(0, Console.WindowWidth));
+
+                        gFood2 = new Position(gFood.row,
+                            gFood.col + 1);
+                    }
+                    while (gSnakeElements.Contains(gFood) || gObstacles.Contains(gFood) || gSnakeElements.Contains(gFood2) || gObstacles.Contains(gFood2)); // To detect whether the snake/obstacle collides with food
+
+                    gLastFoodTime = Environment.TickCount;
                     Draw("Yellow", gFood.col, gFood.row, foodtype[index]);
+                    Draw("Yellow", gFood2.col, gFood2.row, foodtype[index]);
+                    Draw("Yellow", gFood2.col, gFood2.row, foodtype[index]);
                     gSleepTime--; // Increase the velocity that the snake is travelling
 
                     Position obstacle = new Position(); // Initialize position of obstacle
@@ -388,7 +415,8 @@ namespace Snake
                     }
                     while (gSnakeElements.Contains(obstacle) ||
                         gObstacles.Contains(obstacle) ||
-                        (gFood.row != obstacle.row && gFood.col != obstacle.row)); // Makes sure the obstacles do not spawn inside the food or other obstacles
+                        (gFood.row != obstacle.row && gFood.col != obstacle.row) ||
+                        (gFood2.row != obstacle.row && gFood2.col != obstacle.row)); // Makes sure the obstacles do not spawn inside the food or other obstacles
                     gObstacles.Add(obstacle); // Adds a new obstacle to the queue
                     Draw("Cyan", obstacle.col, obstacle.row, "="); // Draws obstacle
                 }
@@ -405,19 +433,23 @@ namespace Snake
                     gNegativePoints = gNegativePoints + 50; // Deduct points for not eating food
                     Console.SetCursorPosition(gFood.col, gFood.row); // Moves cursor to the food about to be deleted
                     Console.Write(" "); // Deletes the food drawn at that position
+                    Console.SetCursorPosition(gFood2.col, gFood2.row); 
+                    Console.Write(" "); 
                     do
                     {
                         // Randomize food 
                         index = randomfood.Next(foodtype.Count);
                         gFood = new Position(gRandomNumbersGenerator.Next(0, Console.WindowHeight),
                             gRandomNumbersGenerator.Next(0, Console.WindowWidth)); // Assigns new position to the food
+                        gFood2 = new Position(gFood.row, gFood.col + 1);
                     }
-                    while (gSnakeElements.Contains(gFood) || gObstacles.Contains(gFood)); // Loops for a new position for food until a valid position is set and drawn
+                    while (gSnakeElements.Contains(gFood) || gObstacles.Contains(gFood) || gSnakeElements.Contains(gFood2) || gObstacles.Contains(gFood2)); // Loops for a new position for food until a valid position is set and drawn
                     gLastFoodTime = Environment.TickCount; // 
                 }
 
                 // Draws food
                 Draw("Yellow", gFood.col, gFood.row, foodtype[index]);
+                Draw("Yellow", gFood2.col, gFood2.row, foodtype[index]);
 
                 gSleepTime -= 0.01; // Increase the velocity of the snake each time the loop is run
 
