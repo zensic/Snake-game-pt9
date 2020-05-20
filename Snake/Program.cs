@@ -245,7 +245,8 @@ namespace Snake
 
                 if (Console.KeyAvailable)
                 {
-                    ConsoleKeyInfo userInput = Console.ReadKey();
+                    // prevents input from showing on console screen
+                    ConsoleKeyInfo userInput = Console.ReadKey(true);
 
                     // Prevents snake from going backwards
                     if (userInput.Key == ConsoleKey.LeftArrow)
