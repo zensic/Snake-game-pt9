@@ -6,6 +6,7 @@ using System.Collections;
 using System.Threading;
 using System.Media;
 using System.IO;
+using System.Xml.XPath;
 
 namespace Snake
 {
@@ -71,6 +72,8 @@ namespace Snake
             string gDifficulty = "normal"; // Displays normal difficulty by default
             double gSleepTime = 100; // Velocity of snake
             int gbonuspoints = 0;
+            char gHeartSymbol = '\u2665';
+            char gObstacleSymbol = '\u2592';
 
             while (true)
             {
@@ -211,7 +214,7 @@ namespace Snake
 
             // Initilize random food
             Random randomfood = new Random();
-            List<string> foodtype = new List<string> { "@", "#", "$", "%" };
+            List<string> foodtype = new List<string> { "@", "#", "$", "%", gHeartSymbol.ToString()};
             int index = randomfood.Next(foodtype.Count);
 
             // Initialize food two times
@@ -381,6 +384,10 @@ namespace Snake
                     {
                         gbonuspoints += 250;
                     }
+                    else if (foodtype[index] == gHeartSymbol.ToString())
+                    {
+                        gbonuspoints += 300;
+                    }
                     else
                     {
                         gbonuspoints += 0;
@@ -418,7 +425,7 @@ namespace Snake
                         (gFood.row != obstacle.row && gFood.col != obstacle.row) ||
                         (gFood2.row != obstacle.row && gFood2.col != obstacle.row)); // Makes sure the obstacles do not spawn inside the food or other obstacles
                     gObstacles.Add(obstacle); // Adds a new obstacle to the queue
-                    Draw("Cyan", obstacle.col, obstacle.row, "="); // Draws obstacle
+                    Draw("Cyan", obstacle.col, obstacle.row, gObstacleSymbol.ToString() ); // Draws obstacle
                 }
                 else
                 {
