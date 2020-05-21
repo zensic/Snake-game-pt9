@@ -26,3 +26,10 @@ D:\Users\Anthony\Desktop\passTask8\Snake-Game-pt8\Snake\obj\Debug\Snake.csprojAs
 D:\Users\Anthony\Desktop\passTask8\Snake-Game-pt8\Snake\obj\Debug\Snake.csproj.CoreCompileInputs.cache
 D:\Users\Anthony\Desktop\passTask8\Snake-Game-pt8\Snake\obj\Debug\Snake.exe
 D:\Users\Anthony\Desktop\passTask8\Snake-Game-pt8\Snake\obj\Debug\Snake.pdb
+C:\Users\Simon\Desktop\DP1\Snake-Game-pt8\Snake\bin\Debug\Snake.exe.config
+C:\Users\Simon\Desktop\DP1\Snake-Game-pt8\Snake\bin\Debug\Snake.exe
+C:\Users\Simon\Desktop\DP1\Snake-Game-pt8\Snake\bin\Debug\Snake.pdb
+C:\Users\Simon\Desktop\DP1\Snake-Game-pt8\Snake\obj\Debug\Snake.csprojAssemblyReference.cache
+C:\Users\Simon\Desktop\DP1\Snake-Game-pt8\Snake\obj\Debug\Snake.csproj.CoreCompileInputs.cache
+C:\Users\Simon\Desktop\DP1\Snake-Game-pt8\Snake\obj\Debug\Snake.exe
+C:\Users\Simon\Desktop\DP1\Snake-Game-pt8\Snake\obj\Debug\Snake.pdb
