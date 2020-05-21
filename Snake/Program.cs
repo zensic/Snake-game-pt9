@@ -6,7 +6,6 @@ using System.Collections;
 using System.Threading;
 using System.Media;
 using System.IO;
-using System.Xml.XPath;
 
 namespace Snake
 {
@@ -72,6 +71,7 @@ namespace Snake
             string gDifficulty = "normal"; // Displays normal difficulty by default
             double gSleepTime = 100; // Velocity of snake
             int gbonuspoints = 0;
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
             char gHeartSymbol = '\u2665';
             char gObstacleSymbol = '\u2592';
 
@@ -202,7 +202,7 @@ namespace Snake
             // Initialize obstacle color
             foreach (Position obstacle in gObstacles)
             {
-                Draw("Cyan", obstacle.col, obstacle.row, "=");
+                Draw("Cyan", obstacle.col, obstacle.row, gObstacleSymbol.ToString());
             }
 
             // Initialize length of snake
