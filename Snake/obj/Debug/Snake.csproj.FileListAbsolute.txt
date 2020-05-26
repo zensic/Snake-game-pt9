@@ -33,3 +33,10 @@ C:\Users\Simon\Desktop\DP1\Snake-Game-pt8\Snake\obj\Debug\Snake.csprojAssemblyRe
 C:\Users\Simon\Desktop\DP1\Snake-Game-pt8\Snake\obj\Debug\Snake.csproj.CoreCompileInputs.cache
 C:\Users\Simon\Desktop\DP1\Snake-Game-pt8\Snake\obj\Debug\Snake.exe
 C:\Users\Simon\Desktop\DP1\Snake-Game-pt8\Snake\obj\Debug\Snake.pdb
+C:\Users\Simon\Desktop\DP1\Snake-game-pt9\Snake\bin\Debug\Snake.exe.config
+C:\Users\Simon\Desktop\DP1\Snake-game-pt9\Snake\bin\Debug\Snake.exe
+C:\Users\Simon\Desktop\DP1\Snake-game-pt9\Snake\bin\Debug\Snake.pdb
+C:\Users\Simon\Desktop\DP1\Snake-game-pt9\Snake\obj\Debug\Snake.csprojAssemblyReference.cache
+C:\Users\Simon\Desktop\DP1\Snake-game-pt9\Snake\obj\Debug\Snake.csproj.CoreCompileInputs.cache
+C:\Users\Simon\Desktop\DP1\Snake-game-pt9\Snake\obj\Debug\Snake.exe
+C:\Users\Simon\Desktop\DP1\Snake-game-pt9\Snake\obj\Debug\Snake.pdb
