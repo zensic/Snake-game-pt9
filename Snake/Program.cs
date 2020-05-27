@@ -80,14 +80,18 @@ namespace Snake
                 Console.BufferHeight = Console.WindowHeight; // Intialize the height of the game window
                 Console.BufferWidth = Console.WindowWidth; // Initialize the width of the game window
                 Console.Clear();
-                Draw("White", Console.BufferWidth / 2 - 3, Console.BufferHeight / 2 - 6, "Main Menu");
-                Draw("White", Console.BufferWidth / 2 - 8, Console.BufferHeight / 2 - 5, "------------------------");
-                Draw("White", Console.BufferWidth / 2 - 8, Console.BufferHeight / 2 - 4, "[1] Start Game");
-                Draw("White", Console.BufferWidth / 2 - 8, Console.BufferHeight / 2 - 3, "[2] Difficulty");
-                Draw("White", Console.BufferWidth / 2 - 8, Console.BufferHeight / 2 - 2, "[3] Highscores");
-                Draw("White", Console.BufferWidth / 2 - 8, Console.BufferHeight / 2 - 1, "[4] Instructions");
-                Draw("White", Console.BufferWidth / 2 - 8, Console.BufferHeight / 2, "[5] Exit\n");
-                Draw("White", Console.BufferWidth / 2 - 8, Console.BufferHeight / 2 + 2, "Enter Your Selection: ");
+                
+                //Print out text art
+                string[] c = File.ReadAllLines(@"..\mainMenu.txt");
+                int i = 0;
+                foreach (string x in c)
+                {
+                    Draw("White", 35, i, x);
+                    i ++;
+                }
+
+                //Read main menu selection
+                Draw("White", Console.BufferWidth / 2 - 8, Console.BufferHeight / 2 + 5, "Enter Your Selection: ");
                 string gSelection = Console.ReadLine();
 
                 if (gSelection == "1")
