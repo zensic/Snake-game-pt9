@@ -294,7 +294,7 @@ namespace Snake
 
                 // Initialize timer in game
                 timerMiliSeconds++;
-                if (timerMiliSeconds == 11)
+                if (timerMiliSeconds > 10)
                 {
                     timerSeconds++;
                     timerMiliSeconds = 0;
@@ -305,7 +305,7 @@ namespace Snake
                     timerSeconds = 0;
                 }
 
-                Draw("White", 99, 0, "                                                                         ");
+                Draw("White", 99, 0, "                   ");
                 Draw("White", 99, 0, "Timer: M " + timerMinutes + " S " + timerSeconds + " MS " + timerMiliSeconds);
 
 
