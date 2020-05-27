@@ -82,7 +82,7 @@ namespace Snake
                 Console.Clear();
                 
                 //Print out text art
-                string[] c = File.ReadAllLines(@"..\mainMenu.txt");
+                string[] c = File.ReadAllLines(@"..\Menu\mainMenu.txt");
                 int i = 0;
                 foreach (string x in c)
                 {
