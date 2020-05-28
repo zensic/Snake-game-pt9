@@ -68,7 +68,7 @@ namespace Snake
             int gLastFoodTime = 0;
             int gFoodDissapearTime = 12000; // Time for food to dissapear in milliseconds
             int gNegativePoints = 0; // Points to be deducted from the final score
-            string gDifficulty = "normal"; // Displays normal difficulty by default
+            string gDifficulty = "2"; // Displays normal difficulty by default
             double gSleepTime = 100; // Velocity of snake
             int gbonuspoints = 0;
             Console.OutputEncoding = System.Text.Encoding.Unicode;
@@ -80,14 +80,14 @@ namespace Snake
                 Console.BufferHeight = Console.WindowHeight; // Intialize the height of the game window
                 Console.BufferWidth = Console.WindowWidth; // Initialize the width of the game window
                 Console.Clear();
-                
+
                 //Print out text art
                 string[] c = File.ReadAllLines(@"..\Menu\mainMenu.txt");
                 int i = 0;
                 foreach (string x in c)
                 {
                     Draw("White", 35, i, x);
-                    i ++;
+                    i++;
                 }
 
                 //Read main menu selection
@@ -133,7 +133,7 @@ namespace Snake
                     // Implement instructions here..
                     Console.Clear();
                     Console.WriteLine("Instructions:"
-                        + "\n1. Move the snake using arrow keys."
+                        + "\n1. Move the snake using arrow keys"
                         + "\n2. Avoid colliding with the obstacle '" + gObstacleSymbol + "'"
                         + "\n3. Avoid colliding with your own body"
                         + "\n4. Eat the food '@, #, $, %, " + gHeartSymbol + "' using the snake head '>'"
@@ -142,9 +142,14 @@ namespace Snake
                     Console.ReadLine();
                 }
 
-                else
+                else if (gSelection == "5")
                 {
                     System.Environment.Exit(0);
+                }
+
+                else
+                {
+                    continue;
                 }
             }
             Console.Clear(); //To clear out current screen
@@ -333,9 +338,15 @@ namespace Snake
                     Console.WriteLine("Your points are: {0}", userPoints);
                     Console.SetCursorPosition(Console.WindowWidth / 2 - 8, 13); //Reposition the string
                     string lScore = "Score: " + userPoints.ToString();
-                    System.IO.File.WriteAllText(@"..\Scores\score.txt", lScore);
+                    using (StreamWriter lFile = File.AppendText(@"..\Scores\score.txt"))
+                    {
+                        lFile.WriteLine("\nPlayer : " + lPlyr_name);
+                        lFile.WriteLine(lScore);
+                        lFile.WriteLine("--------------------");
+                    }
+                    Console.SetCursorPosition(Console.WindowWidth / 2 - 8, 14); //Reposition the string
                     Console.WriteLine("Press Enter to exit the game");
-                    Console.ReadLine();
+                    Console.ReadKey();
                     return;
                 }
 
@@ -346,25 +357,25 @@ namespace Snake
                     int lastSeconds = timerSeconds;
                     int lastMinutes = timerMinutes;
 
-                    Draw("Red", 0, 0, "");
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.SetCursorPosition(Console.WindowWidth / 2, 10); //Reposition the string
                     Console.WriteLine("Game over!");
                     Console.SetCursorPosition(Console.WindowWidth / 2 - 4, 11); //Reposition the string
                     Console.WriteLine("Your points are: {0}", userPoints);
-                    Console.SetCursorPosition(Console.WindowWidth / 2 - 8, 12); //Reposition the string
+                    Console.SetCursorPosition(Console.WindowWidth / 2 - 11, 12); //Reposition the string
                     Console.WriteLine("Time taken: " + lastMinutes + " minute(s) " + lastSeconds + " second(s)");
-                    string lScore = "Score: " + userPoints.ToString();
 
                     // Updating score text file
+                    string lScore = "Score: " + userPoints.ToString();
                     using (StreamWriter lFile = File.AppendText(@"..\Scores\score.txt"))
                     {
                         lFile.WriteLine("\nPlayer : " + lPlyr_name);
                         lFile.WriteLine(lScore);
                         lFile.WriteLine("--------------------");
                     }
-                    Console.SetCursorPosition(Console.WindowWidth / 2 - 8, 13); //Reposition the string
+                    Console.SetCursorPosition(Console.WindowWidth / 2 - 8, 14); //Reposition the string
                     Console.WriteLine("Press Enter to exit the game");
-                    Console.ReadLine();
+                    Console.ReadKey();
                     return;
                 }
 
@@ -479,7 +490,7 @@ namespace Snake
                     {
                         // Randomize food 
                         index = randomfood.Next(foodtype.Count);
-                        gFood = new Position(gRandomNumbersGenerator.Next(0, Console.WindowHeight),
+                        gFood = new Position(gRandomNumbersGenerator.Next(1, Console.WindowHeight),
                             gRandomNumbersGenerator.Next(0, Console.WindowWidth)); // Assigns new position to the food
                         gFood2 = new Position(gFood.row, gFood.col + 1);
                     }
