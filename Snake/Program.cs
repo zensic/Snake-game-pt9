@@ -132,10 +132,12 @@ namespace Snake
                 {
                     // Implement instructions here..
                     Console.Clear();
-                    Console.WriteLine("Instructions:" +
-                        "\n1. Move the snake using arrow keys." +
-                        "\n2. Avoid colliding with the obstacle '='" +
-                        "\n3. Eat the food '@' using the snake head '>' to gain the snake length '*' ");
+                    Console.WriteLine("Instructions:"
+                        + "\n1. Move the snake using arrow keys."
+                        + "\n2. Avoid colliding with the obstacle '" + gObstacleSymbol + "'"
+                        + "\n3. Avoid colliding with your own body"
+                        + "\n4. Eat the food '@, #, $, %, " + gHeartSymbol + "' using the snake head '>'"
+                        + "\n5. Each food gives you different values");
                     Console.WriteLine("\nPress enter to continue...");
                     Console.ReadLine();
                 }
